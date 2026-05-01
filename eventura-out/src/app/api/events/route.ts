@@ -40,9 +40,19 @@ export async function POST(request: NextRequest) {
     const supabase = createAdminClient();
 
     const body = await request.json();
-    const { sessions, department_ids, organizer_ids, ...eventData } = body;
+    // Strip PK and timestamp fields — let Postgres assign them via BIGSERIAL/DEFAULT
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { sessions, department_ids, organizer_ids, event_id: _eid, submitted_at: _sat, created_at: _cat, updated_at: _uat, ...eventData } = body;
 
-    // Insert event
+    // Auto-generate event_code if blank
+    if (!eventData.event_code) {
+      const prefix = String(eventData.category || "EVT").slice(0, 3).toUpperCase();
+      const year = new Date().getFullYear();
+      const rand = Math.floor(1000 + Math.random() * 9000);
+      eventData.event_code = `${prefix}-${year}-${rand}`;
+    }
+
+    // Insert event — BIGSERIAL assigns event_id automatically
     const { data: event, error: eventError } = await supabase
       .from("events")
       .insert({ ...eventData })

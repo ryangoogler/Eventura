@@ -48,10 +48,14 @@ function ParticipantsContent() {
 
   const filtered = registrations.filter(r => {
     const p = r.participant;
-    if (!p) return true;
-    return !search || p.full_name.toLowerCase().includes(search.toLowerCase()) ||
+    if (!search) return true;           // no search active — show all
+    if (!p) return false;               // search active but no participant data — hide
+    return (
+      p.full_name.toLowerCase().includes(search.toLowerCase()) ||
       (p.roll_number || "").toLowerCase().includes(search.toLowerCase()) ||
-      (p.university_email || "").toLowerCase().includes(search.toLowerCase());
+      (p.university_email || "").toLowerCase().includes(search.toLowerCase()) ||
+      (p.personal_email || "").toLowerCase().includes(search.toLowerCase())
+    );
   });
 
   const STATUS_COLORS: Record<string, string> = {

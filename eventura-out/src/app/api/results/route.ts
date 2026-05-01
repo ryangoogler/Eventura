@@ -34,11 +34,18 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
+    // Strip any PK/timestamp fields the client may have sent
+    function stripPK(row: Record<string, unknown>) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { result_id: _r, created_at: _c, ...rest } = row;
+      return rest;
+    }
+
     // Support bulk results insert
     if (Array.isArray(body)) {
       const { data, error } = await supabase
         .from("results")
-        .insert(body)
+        .insert(body.map(stripPK))
         .select();
       if (error) return NextResponse.json({ error: error.message }, { status: 400 });
       return NextResponse.json({ data }, { status: 201 });
@@ -46,7 +53,7 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await supabase
       .from("results")
-      .insert(body)
+      .insert(stripPK(body))
       .select(`*, participant:participants(full_name), team:teams(team_name)`)
       .single();
 

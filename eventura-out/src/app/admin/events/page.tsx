@@ -104,7 +104,7 @@ export default function AdminEventsPage() {
                   <tr key={ev.event_id}>
                     <td>
                       <div style={{ fontWeight: 600 }}>{ev.event_name}</div>
-                      <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>{ev.event_code}</div>
+                      <div style={{ fontSize: "11px", color: "var(--text-muted)", fontFamily: "'JetBrains Mono', monospace" }}>{ev.event_code} · #{ev.event_id}</div>
                     </td>
                     <td><span className={`badge badge-${ev.category}`}>{ev.category}</span></td>
                     <td style={{ fontSize: "13px", color: "var(--text-secondary)", textTransform: "capitalize" }}>{ev.event_mode}</td>

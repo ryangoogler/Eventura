@@ -53,7 +53,7 @@ export default function OrganiserEventsPage() {
                 </span>
               </div>
               <h3 style={{ fontSize: "16px", marginBottom: "6px", fontFamily: "'DM Sans', sans-serif", fontWeight: 700 }}>{ev.event_name}</h3>
-              <div style={{ fontSize: "12px", color: "var(--text-muted)", marginBottom: "4px" }}>{ev.event_code}</div>
+              <div style={{ fontSize: "12px", color: "var(--text-muted)", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>{ev.event_code} <span style={{ opacity: 0.5 }}>· #{ev.event_id}</span></div>
               <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "16px" }}>
                 {new Date(ev.event_start_at).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" })}
               </div>

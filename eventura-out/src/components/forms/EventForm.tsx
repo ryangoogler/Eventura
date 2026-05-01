@@ -15,7 +15,7 @@ export default function EventForm({ event, onClose, onSaved }: Props) {
   const [error, setError] = useState("");
 
   const [form, setForm] = useState({
-    event_code: event?.event_code || "",
+    event_code: event?.event_code || "",  // auto-generated on create; read-only display on edit
     event_name: event?.event_name || "",
     short_name: event?.short_name || "",
     primary_department_id: event?.primary_department_id || "",
@@ -62,8 +62,12 @@ export default function EventForm({ event, onClose, onSaved }: Props) {
     setLoading(true);
     setError("");
 
+    // For new events, strip event_code so server auto-generates it
+    const { event_code: _ec, ...formWithoutCode } = form;
+    const baseForm = event ? form : formWithoutCode;
+
     const payload = {
-      ...form,
+      ...baseForm,
       primary_department_id: Number(form.primary_department_id),
       venue_id: form.venue_id ? Number(form.venue_id) : null,
       registration_fee: Number(form.registration_fee),
@@ -127,8 +131,17 @@ export default function EventForm({ event, onClose, onSaved }: Props) {
           <div style={{ marginBottom: "8px", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>Basic Information</div>
           <div style={gridTwo}>
             <div style={inputStyle}>
-              <label className="label">Event Code *</label>
-              <input className="input" value={form.event_code} onChange={e => set("event_code", e.target.value)} placeholder="EVT-2025-001" required />
+              <label className="label">Event Code</label>
+              {event ? (
+                <div style={{ padding: "9px 12px", background: "var(--cream-dark)", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontSize: "13px", fontWeight: 600, color: "var(--navy)", fontFamily: "'JetBrains Mono', monospace" }}>
+                  {form.event_code}
+                  <span style={{ marginLeft: 8, fontSize: 11, color: "var(--text-muted)", fontWeight: 400, fontFamily: "inherit" }}>ID #{event.event_id}</span>
+                </div>
+              ) : (
+                <div style={{ padding: "9px 12px", background: "var(--cream-dark)", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontSize: "12px", color: "var(--text-muted)", fontStyle: "italic" }}>
+                  Auto-generated on save (e.g. TEC-2025-4821)
+                </div>
+              )}
             </div>
             <div style={inputStyle}>
               <label className="label">Short Name</label>
