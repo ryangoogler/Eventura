@@ -1,6 +1,12 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import type { AttendanceLog, EventSession } from "@/types";
+import type { AttendanceLog as BaseAttendanceLog, EventSession } from "@/types";
+
+// Extend the base type to explicitly include joined fields returned by the API
+type AttendanceLog = BaseAttendanceLog & {
+  participant?: { full_name?: string; roll_number?: string; university_email?: string };
+  session?: { session_name?: string; session_type?: string };
+};
 
 interface EventOption { event_id: number; event_name: string; }
 
