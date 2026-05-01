@@ -1,6 +1,6 @@
 # Eventura — College Event Statistics Portal
 
-> **Live URL:** https://eventura-ryangooglers-projects.vercel.app  
+> **Live URL:** https://eventura-8prmwone6-ryangooglers-projects.vercel.app/admin/ai 
 > **GitHub:** https://github.com/ryangoogler/Eventura  
 > **Course:** Data Analytics & Visualization — Mini Project  
 > **Team:** 2 students | **Instructors:** K. Shivaprasad, Nitish Hegde
