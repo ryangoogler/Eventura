@@ -169,8 +169,8 @@ export interface Registration {
   remarks?: string;
   created_at: string;
   participant?: Participant;
-  event?: Event;
-  team?: Team;
+  event?: { event_name?: string; event_start_at?: string; event_code?: string; category?: string; status?: string };
+  team?: { team_name?: string; team_code?: string };
 }
 
 export interface AttendanceLog {
@@ -186,6 +186,8 @@ export interface AttendanceLog {
   marked_by?: number;
   remarks?: string;
   created_at: string;
+  participant?: { full_name?: string; roll_number?: string; university_email?: string };
+  session?: { session_name?: string; session_type?: string };
 }
 
 export interface Judge {
@@ -215,8 +217,9 @@ export interface Result {
   published_at?: string;
   remarks?: string;
   created_at: string;
-  participant?: Participant;
-  team?: Team;
+  participant?: { full_name?: string; roll_number?: string; department_id?: number };
+  team?: { team_name?: string; team_code?: string };
+  event?: { event_name?: string; event_code?: string; category?: string };
 }
 
 export interface Feedback {
