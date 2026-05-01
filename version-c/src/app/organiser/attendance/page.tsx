@@ -191,8 +191,8 @@ export default function OrganiserAttendancePage() {
                 </thead>
                 <tbody>
                   {attendance.map((log, idx) => {
-                    const p = (log as any).participant;
-                    const s = (log as any).session;
+                    const p = log.participant as { full_name?: string; roll_number?: string } | undefined;
+                    const s = log.session as { session_name?: string } | undefined;
                     return (
                       <tr key={log.attendance_id}>
                         <td style={{ color: "var(--text-muted)", fontSize: "12px" }}>{idx + 1}</td>
